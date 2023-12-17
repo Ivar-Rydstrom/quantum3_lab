@@ -163,3 +163,49 @@ else
    diff = (datadep-ideal)./stddev;
    err = diff;
 end
+
+function err = sin_squared_rise(parms,dataind,datadep,stddev)
+% parms(1): overall amplitude
+% parms(2): exponential decay contstant
+% parms(3): angular frequency
+% parms(4): phase
+% parms(5): y-offset
+% parms(6): envelope x-offset
+% parms(7): envelope scale
+
+ideal =  (1 - exp(-(parms(7)*dataind+parms(6))./parms(2))) .* (parms(1) .* sin(parms(3).*dataind + parms(4))).^2 + parms(5);
+if nargin < 3
+   err = ideal;
+else
+   diff = (datadep-ideal)./stddev;
+   err = diff;
+end
+
+
+function err = exp_decay(parms,dataind,datadep,stddev)
+% parms(1) = amp
+% parms(2) = 
+
+ideal =  parms(1) * exp(-2/parms(2)*(dataind)) + parms(4);
+if nargin < 3
+   err = ideal;
+else
+   diff = (datadep-ideal)./stddev;
+   err = diff;
+end
+
+
+function err = abs_sinc(parms,dataind,datadep,stddev)
+% parms(1): overall amplitude
+% parms(2): angular frequency
+% parms(3): phase
+% parms(4): y-offset
+
+V = sym(dataind);
+ideal = double(parms(1) .* abs(sinc(parms(2) * V + parms(3))) + parms(4));
+if nargin < 3
+   err = ideal;
+else
+   diff = (datadep-ideal)./stddev;
+   err = diff;
+end

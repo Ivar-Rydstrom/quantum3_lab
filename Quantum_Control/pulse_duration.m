@@ -5,9 +5,12 @@ clf;
 f = 89;
 T = 1/f;
 t = x(:,1) .* T;
-plot(t, x(:,2), 'ok', t, fitdata, '-r')
+x_plot = linspace(10, 500, 1000);
+y_plot = p(1) .* exp(-x_plot./p(2)) .* (sin(p(3).*x_plot + p(4))).^2 + p(5);
+x_plot = x_plot.*T;
+plot(t, x(:,2), 'ok', x_plot, y_plot, '-r')
 
-l_ = legend("Data", "Sine Squared Fit");
+l_ = legend("Data", "Decaying Sine Squared Fit");
 t_ = title("Intervention Pulse Duration");
 x_ = xlabel("Pulse Duration (ms)");
 y_ = ylabel("Echo Amplitude (V)");
